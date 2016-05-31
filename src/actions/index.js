@@ -20,16 +20,30 @@ export function addUser(id) {
                 dispatch({ type: ADD_USER_LOADED, user });
             }
         });
-        // callApi((err, res) => {
-        //     if (err) {
-        //         return dispatch({ type: 'ADD_USER_FAILED', message: err.message });
-        //     }
-        // })
     }
 };
 
-export const ADD_COMMENT = 'ADD_COMMENT';
-export const addComment = comment => ({ type: ADD_COMMENT, comment });
+export const SEARCH_REQUEST = 'SEARCH_REQUEST';
+export const SEARCH_LOADED = 'SEARCH_LOADED';
+export const SEARCH_FAILED = 'SEARCH_FAILED';
+
+export function search(searchTerm) {
+    return (dispatch) => {
+        dispatch({type: SEARCH_REQUEST});
+
+        VK.api('audio.search',{
+            q: searchTerm
+        }, (data) => {
+            if (data.response) {
+                let songs = data.response;
+                dispatch({ type: SEARCH_LOADED, songs, searchTerm });
+            }
+        });
+    }
+};
+
+export const GET_SEARCHTERM = 'GET_SEARCHTERM';
+export const getSearchTerm = searchTerm => ({ type: GET_SEARCHTERM, searchTerm});
 
 export const GET_USER_TRACKS = 'GET_USER_TRACKS';
 export const getUserTracks = track => ({ type: GET_USER_TRACKS, track});

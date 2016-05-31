@@ -2,18 +2,17 @@ import * as types from '../actions';
 
 let initialState = {
     value: {
-        firstName: 'firstName',
-        lastName: 'lastName',
-        id: 1,
-        userPic: 'userPic'
+        searchTerm: '',
+        searchResults: []
     },
-    fetchStatus: {}
+    fetchStatus: {
+        value: ''
+    }
 };
 
-export default function user(state = initialState, action) {
+export default function userSearch(state = initialState, action) {
     switch(action.type) {
-        case types.ADD_USER_REQUEST:
-            // return state.concat(action.user);
+        case types.SEARCH_REQUEST:
             return {
                 ...state,
                 fetchStatus: {
@@ -21,7 +20,7 @@ export default function user(state = initialState, action) {
                     value: 'LOADING'
                 }
             };
-        case types.ADD_USER_FAILED:
+        case types.SEARCH_FAILED:
             return {
                 ...state,
                 fetchStatus: {
@@ -31,14 +30,25 @@ export default function user(state = initialState, action) {
                 }
             };
 
-        case types.ADD_USER_LOADED:
+        case types.SEARCH_LOADED:
             return {
                 ...state,
                 fetchStatus: {
                     ...state.fetchStatus,
                     value: 'LOADED'
                 },
-                value: action.user
+                value: {
+                    searchTerm: action.searchTerm,
+                    searchResults: action.songs
+                }
+            };
+
+        case types.GET_SEARCHTERM:
+            return {
+                ...state,
+                value: {
+                    searchTerm: action.searchTerm
+                }
             };
 
         default:

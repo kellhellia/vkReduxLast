@@ -5,7 +5,7 @@ import store from '../store';
 class Navbar extends Component {
     render() {
         let { user } = this.props;
-        console.log(user.value);
+
         return (
             <nav className="navbar navbar-default">
               <div className="container-fluid">
