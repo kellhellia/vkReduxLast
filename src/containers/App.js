@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
 import store from '../store';
 import { addUser } from '../actions';
-import request from 'superagent';
+import { Link } from 'react-router';
 
 import Navbar from './Navbar';
 import UserSongs from './UserSongs';
@@ -30,10 +30,12 @@ class App extends Component {
     }
 
     render() {
+        let user = this.props.user.value;
         return (
             <div>
                 <Navbar />
                 <div className="container-fluid">
+                    <Link to={`/playlist/${user.id}`} className="btn btn-primary">Create playlist</Link>
                     <UserSearch />
                     <UserSongs />
                 </div>
