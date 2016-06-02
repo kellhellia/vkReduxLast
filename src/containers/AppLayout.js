@@ -9,12 +9,33 @@ import UserSongs from './UserSongs';
 import UserSearch from './UserSearch';
 
 class App extends Component {
+    componentDidMount() {
+        this.init();
+    }
+
+    authInfo(response) {
+        if (response.session) {
+            this.props.dispatch(addUser(response.session.mid));
+        } else {
+            console.log('not auth');
+        }
+    }
+
+    init() {
+        VK.init({
+            apiId: 5098778
+        });
+
+        VK.Auth.getLoginStatus(this.authInfo.bind(this));
+    }
+
     render() {
         let user = this.props.user.value;
         return (
             <div>
+                <Navbar />
                 <div className="container-fluid">
-                    <Link to={`/playlist/new`} className="btn btn-primary">Create playlist</Link>
+                    {this.props.children}
                 </div>
             </div>
         );

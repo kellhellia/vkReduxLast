@@ -37,6 +37,7 @@ export function search(searchTerm) {
             if (data.response) {
                 let songs = data.response;
                 dispatch({ type: SEARCH_LOADED, songs, searchTerm });
+                console.log(songs);
             }
         });
     }

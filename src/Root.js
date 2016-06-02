@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import store from './store';
-import App from './containers/App';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+
+import App from './containers/App';
+import AppLayout from './containers/AppLayout';
 import PlaylistCreate from './containers/PlaylistCreate';
 
 const history = syncHistoryWithStore(browserHistory, store);
@@ -15,9 +17,9 @@ export default class Root extends Component {
     return (
        <Provider store={store}>
         <Router history={history}>
-          <Route path="/">
+          <Route path="/" component={AppLayout}>
             <IndexRoute component={App}/>
-            <Route path="playlist/:id" component={PlaylistCreate}/>
+            <Route path="playlist/new" component={PlaylistCreate}/>
           </Route>
         </Router>
       </Provider>

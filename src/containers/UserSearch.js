@@ -14,6 +14,7 @@ class UserSearch extends Component {
         let searchTerm = this.props.userSearch.value.searchTerm;
 
         if (searchTerm.length !== 0) {
+            console.log(1)
             this.props.dispatch(search(searchTerm));
         }
     }
@@ -24,12 +25,21 @@ class UserSearch extends Component {
         let searchResultsSongs = searchResults ?
             searchResults.map((track, index) => {
                 if (track.title) {
-                    return <div key={index}>{track.artist} - {track.title}</div>;
+                    return (
+                        <div key={index}>
+                            <p>{track.artist} - {track.title}</p>
+                            <audio key={index} preload="none" controls>
+                                <source src={track.url}/>
+                            </audio>
+                        </div>
+                    )
                 }
             }) : '';
 
         let searchResultsBlock = searchResults && searchResults.length ?
             (<div className="col-sm-12">Search results: {searchResultsSongs} </div>) : <span />;
+
+        console.log(this.props);
 
         return (
             <div className="mb50 row">
