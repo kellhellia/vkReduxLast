@@ -33,8 +33,10 @@ class App extends Component {
         let user = this.props.user.value;
         return (
             <div>
-                <Navbar />
                 <div className="container-fluid">
+                    <Navbar />
+                </div>
+                <div className="container">
                     {this.props.children}
                 </div>
             </div>

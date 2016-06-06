@@ -46,5 +46,8 @@ export function search(searchTerm) {
 export const GET_SEARCHTERM = 'GET_SEARCHTERM';
 export const getSearchTerm = searchTerm => ({ type: GET_SEARCHTERM, searchTerm});
 
+export const GET_NEW_PLAYLIST_NAME = 'GET_NEW_PLAYLIST_NAME';
+export const getNewPlaylistName = playlistName => ({ type: GET_NEW_PLAYLIST_NAME, playlistName});
+
 export const GET_USER_TRACKS = 'GET_USER_TRACKS';
 export const getUserTracks = track => ({ type: GET_USER_TRACKS, track});

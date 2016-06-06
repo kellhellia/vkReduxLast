@@ -7,6 +7,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import App from './containers/App';
 import AppLayout from './containers/AppLayout';
 import PlaylistCreate from './containers/PlaylistCreate';
+import PlaylistCreateAddSongs from './containers/PlaylistCreateAddSongs';
 
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -20,6 +21,7 @@ export default class Root extends Component {
           <Route path="/" component={AppLayout}>
             <IndexRoute component={App}/>
             <Route path="playlist/new" component={PlaylistCreate}/>
+            <Route path="playlist/new/:playlistName" component={PlaylistCreateAddSongs}/>
           </Route>
         </Router>
       </Provider>

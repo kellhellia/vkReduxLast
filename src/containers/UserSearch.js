@@ -14,7 +14,6 @@ class UserSearch extends Component {
         let searchTerm = this.props.userSearch.value.searchTerm;
 
         if (searchTerm.length !== 0) {
-            console.log(1)
             this.props.dispatch(search(searchTerm));
         }
     }
@@ -38,8 +37,6 @@ class UserSearch extends Component {
 
         let searchResultsBlock = searchResults && searchResults.length ?
             (<div className="col-sm-12">Search results: {searchResultsSongs} </div>) : <span />;
-
-        console.log(this.props);
 
         return (
             <div className="mb50 row">
