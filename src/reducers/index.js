@@ -5,7 +5,6 @@ import tracks from './tracksReducers';
 import userSearch from './userSearchReducers';
 import newPlaylist from './newPlaylistReducers';
 
-
 export default combineReducers({
     user,
     tracks,

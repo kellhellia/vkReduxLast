@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
 import store from '../store';
-import { addUser } from '../actions';
+import { addUser, getUserPlaylists } from '../actions';
 import { Link } from 'react-router';
 
 import Navbar from './Navbar';
@@ -9,28 +9,33 @@ import UserSongs from './UserSongs';
 import UserSearch from './UserSearch';
 
 class App extends Component {
-    componentDidMount() {
-        this.init();
+    async componentDidMount() {
+        await this.init();
+
+        let userId = this.props.user.value.id;
+        this.props.getUserPlaylists(userId);
     }
 
-    authInfo(response) {
-        if (response.session) {
-            this.props.dispatch(addUser(response.session.mid));
-        } else {
-            console.log('not auth');
-        }
-    }
-
-    init() {
+    async init() {
         VK.init({
             apiId: 5098778
         });
 
-        VK.Auth.getLoginStatus(this.authInfo.bind(this));
+        return new Promise((resolve, reject) => {
+            VK.Auth.getLoginStatus(async (response) => {
+                if (response.session) {
+                    await this.props.addUser(response.session.mid);
+                    resolve(null);
+                } else {
+                    reject(new Error('not auth'));
+                }
+            });
+        });
     }
 
     render() {
         let user = this.props.user.value;
+
         return (
             <div>
                 <div className="container-fluid">
@@ -44,6 +49,6 @@ class App extends Component {
     }
 }
 
-App = connect(state => state)(App);
+App = connect(state => state, { addUser, getUserPlaylists})(App);
 
 export default App;
