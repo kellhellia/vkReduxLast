@@ -27,31 +27,7 @@ export function addUser(userId) {
             });
         });
     }
-
 }
-
-// export function addUser(userId, callback) {
-//     return (dispatch) => {
-//         dispatch({type: ADD_USER_REQUEST});
-
-//         VK.api('users.get',{
-//             user_ids: userId,
-//             fields: 'photo_50'
-//         }, (data) => {
-//             if (data.response) {
-//                 let userData = data.response[0];
-//                 let user = {
-//                     id: userData.uid,
-//                     firstName: userData.first_name,
-//                     lastName: userData.last_name,
-//                     userPic: userData.photo_50
-//                 };
-//                 dispatch({ type: ADD_USER_LOADED, user });
-//                 callback(null);
-//             }
-//         });
-//     }
-// };
 
 export const GET_USER_PLAYLISTS = 'GET_USER_PLAYLISTS';
 export const GET_USER_PLAYLISTS_LOADED = 'GET_PLAYLISTS_LOADED';
@@ -63,17 +39,12 @@ export function getUserPlaylists(userId) {
 
         request
             .get(`http://localhost:3000/playlists/${userId}`)
-            .send({
-                ownerId: userId
-             })
             .set('Accept', 'application/json')
             .end(function(err, res){
                 if (err || !res.ok) {
                     dispatch({ type: GET_USER_PLAYLISTS_FAILED });
                 } else {
-                    console.log(res);
-
-                    let playlists = res;
+                    let playlists = JSON.parse(res.text);
                     dispatch({ type: GET_USER_PLAYLISTS_LOADED, playlists });
                 }
             });

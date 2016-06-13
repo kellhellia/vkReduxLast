@@ -8,7 +8,7 @@ import Navbar from './Navbar';
 import UserSongs from './UserSongs';
 import UserSearch from './UserSearch';
 
-class App extends Component {
+class AppLayout extends Component {
     async componentDidMount() {
         await this.init();
 
@@ -49,6 +49,6 @@ class App extends Component {
     }
 }
 
-App = connect(state => state, { addUser, getUserPlaylists})(App);
+AppLayout = connect(state => state, { addUser, getUserPlaylists})(AppLayout);
 
-export default App;
+export default AppLayout;
