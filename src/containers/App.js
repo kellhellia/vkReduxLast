@@ -10,8 +10,6 @@ import UserSearch from './UserSearch';
 
 class App extends Component {
     render() {
-        console.log('App: ', this.props);
-
         let userPlaylists = this.props.user.playlists.playlists;
 
         let playlists = userPlaylists ? userPlaylists.map((playlist) => {

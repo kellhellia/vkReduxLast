@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../store';
 import request from 'superagent';
+import { addCurrentPlaylistId } from '../actions';
 
 import UserSearch from './UserSearch';
 
@@ -16,13 +17,12 @@ class PlaylistEdit extends Component {
                 if (err || !res.ok) {
                     console.log(err);
                 } else {
-                    console.log(res.text);
+                    console.log('oks')
                 }
             });
 
-        console.log(this.props.params);
+        this.props.dispatch(addCurrentPlaylistId(playlistId));
     }
-
 
     render() {
         return (

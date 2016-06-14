@@ -51,6 +51,9 @@ export function getUserPlaylists(userId) {
     }
 };
 
+export const ADD_CURRENT_PLAYLIST_ID = 'ADD_CURRENT_PLAYLIST_ID';
+export const addCurrentPlaylistId = currentPlaylist => ({ type: ADD_CURRENT_PLAYLIST_ID, currentPlaylist});
+
 export const SEARCH_REQUEST = 'SEARCH_REQUEST';
 export const SEARCH_LOADED = 'SEARCH_LOADED';
 export const SEARCH_FAILED = 'SEARCH_FAILED';

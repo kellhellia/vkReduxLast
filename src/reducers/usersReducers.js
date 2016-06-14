@@ -8,7 +8,8 @@ let initialState = {
         userPic: 'userPic'
     },
     playlists: [],
-    fetchStatus: {}
+    fetchStatus: {},
+    currentPlaylist: ''
 };
 
 // TBD: Need to refactor and divide logic of playlists and user
@@ -72,6 +73,12 @@ export default function user(state = initialState, action) {
                     value: 'LOADED'
                 },
                 playlists: action.playlists
+            };
+
+        case types.ADD_CURRENT_PLAYLIST_ID:
+            return {
+                ...state,
+                currentPlaylist: action.currentPlaylist
             };
 
         default:
