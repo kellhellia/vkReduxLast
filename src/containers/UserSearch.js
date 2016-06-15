@@ -12,7 +12,7 @@ class UserSearch extends Component {
     handleBtnSearch(e) {
         e.preventDefault();
 
-        let searchTerm = this.props.userSearch.value.searchTerm;
+        let searchTerm = this.props.search.value.searchTerm;
 
         if (searchTerm.length !== 0) {
             this.props.dispatch(search(searchTerm));
@@ -20,7 +20,7 @@ class UserSearch extends Component {
     }
 
     handleBtnAddSong(track) {
-        let currentPlaylistId = this.props.user.currentPlaylist;
+        let currentPlaylistId = this.props.currentPlaylist;
         request
             .post(`http://localhost:3000/playlist/${currentPlaylistId}`)
             .set('Accept', 'application/json')
@@ -35,7 +35,7 @@ class UserSearch extends Component {
     }
 
     render() {
-        let searchResults = this.props.userSearch.value.searchResults;
+        let searchResults = this.props.search.value.searchResults;
 
         let searchResultsSongs = searchResults ?
             searchResults.map((track, index) => {

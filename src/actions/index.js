@@ -44,15 +44,32 @@ export function getUserPlaylists(userId) {
                 if (err || !res.ok) {
                     dispatch({ type: GET_USER_PLAYLISTS_FAILED });
                 } else {
-                    let playlists = JSON.parse(res.text);
-                    dispatch({ type: GET_USER_PLAYLISTS_LOADED, playlists });
+                    let result = JSON.parse(res.text);
+                    dispatch({ type: GET_USER_PLAYLISTS_LOADED, playlists: result.playlists });
                 }
             });
     }
 };
 
-export const ADD_CURRENT_PLAYLIST_ID = 'ADD_CURRENT_PLAYLIST_ID';
-export const addCurrentPlaylistId = currentPlaylist => ({ type: ADD_CURRENT_PLAYLIST_ID, currentPlaylist});
+export const ADD_CURRENT_PLAYLIST = 'ADD_CURRENT_PLAYLIST';
+export const addCurrentPlaylistId = currentPlaylist => ({ type: ADD_CURRENT_PLAYLIST, currentPlaylist});
+
+export function getCurrentPlaylist(playlistId) {
+    return (dispatch) => {
+        request
+            .get(`http://localhost:3000/playlist/${playlistId}`)
+            .set('Accept', 'application/json')
+            .end(function(err, res){
+                if (err || !res.ok) {
+                    console.log(err);
+                } else {
+                    let currentPlaylist = JSON.parse(res.text);
+
+                    dispatch({ type: ADD_CURRENT_PLAYLIST, currentPlaylist});
+                }
+            });
+    }
+};
 
 export const SEARCH_REQUEST = 'SEARCH_REQUEST';
 export const SEARCH_LOADED = 'SEARCH_LOADED';

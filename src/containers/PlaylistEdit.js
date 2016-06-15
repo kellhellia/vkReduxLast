@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../store';
 import request from 'superagent';
-import { addCurrentPlaylistId } from '../actions';
+import { getCurrentPlaylist } from '../actions';
 
 import UserSearch from './UserSearch';
 
@@ -10,18 +10,7 @@ class PlaylistEdit extends Component {
     componentDidMount() {
         let playlistId = this.props.params.playlistId;
 
-        request
-            .get(`http://localhost:3000/playlist/${playlistId}`)
-            .set('Accept', 'application/json')
-            .end(function(err, res){
-                if (err || !res.ok) {
-                    console.log(err);
-                } else {
-                    console.log('oks')
-                }
-            });
-
-        this.props.dispatch(addCurrentPlaylistId(playlistId));
+        this.props.dispatch(getCurrentPlaylist(playlistId));
     }
 
     render() {
@@ -29,7 +18,7 @@ class PlaylistEdit extends Component {
             <div>
                 <UserSearch />
 
-                <p>Playlist edit blyat</p>
+                <p>play edit</p>
             </div>
         )
 

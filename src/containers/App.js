@@ -10,20 +10,21 @@ import UserSearch from './UserSearch';
 
 class App extends Component {
     render() {
-        let userPlaylists = this.props.user.playlists.playlists;
+        let userPlaylists = this.props.playlists.playlists;
 
-        let playlists = userPlaylists ? userPlaylists.map((playlist) => {
+        let playlists = userPlaylists ? userPlaylists.map((playlist, index) => {
             let playlistUrl = `/playlist/${playlist._id}`;
 
             return (
-                <Link to={playlistUrl} className="col-xs-3">
+                <Link key={index} to={playlistUrl} className="col-xs-3">
                     <p>{playlist._id}</p>
                     <p>{playlist.playlistName}</p>
                 </Link>
             );
         }) : <span />;
 
-        let user = this.props.user.value;
+        console.log(this.props);
+
         return (
             <div>
                 <div className="container-fluid">

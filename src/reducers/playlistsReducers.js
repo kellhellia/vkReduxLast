@@ -1,18 +1,15 @@
 import * as types from '../actions';
 
 let initialState = {
-    value: {
-        searchTerm: '',
-        searchResults: []
-    },
-    fetchStatus: {
-        value: ''
-    }
+    fetchStatus: {},
+    value: {}
 };
 
-export default function userSearch(state = initialState, action) {
+// TBD: Need to refactor and divide logic of playlists and user
+
+export default function playlists(state = initialState, action) {
     switch(action.type) {
-        case types.SEARCH_REQUEST:
+        case types.GET_USER_PLAYLISTS:
             return {
                 ...state,
                 fetchStatus: {
@@ -20,7 +17,8 @@ export default function userSearch(state = initialState, action) {
                     value: 'LOADING'
                 }
             };
-        case types.SEARCH_FAILED:
+
+        case types.GET_USER_PLAYLISTS_FAILED:
             return {
                 ...state,
                 fetchStatus: {
@@ -30,25 +28,14 @@ export default function userSearch(state = initialState, action) {
                 }
             };
 
-        case types.SEARCH_LOADED:
+        case types.GET_USER_PLAYLISTS_LOADED:
             return {
                 ...state,
                 fetchStatus: {
                     ...state.fetchStatus,
                     value: 'LOADED'
                 },
-                value: {
-                    searchTerm: action.searchTerm,
-                    searchResults: action.songs
-                }
-            };
-
-        case types.GET_SEARCHTERM:
-            return {
-                ...state,
-                value: {
-                    searchTerm: action.searchTerm
-                }
+                value: action.playlists
             };
 
         default:
