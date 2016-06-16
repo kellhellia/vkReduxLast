@@ -10,7 +10,7 @@ import UserSearch from './UserSearch';
 
 class App extends Component {
     render() {
-        let userPlaylists = this.props.playlists.playlists;
+        let userPlaylists = this.props.playlists.value;
 
         let playlists = userPlaylists ? userPlaylists.map((playlist, index) => {
             let playlistUrl = `/playlist/${playlist._id}`;
@@ -22,8 +22,6 @@ class App extends Component {
                 </Link>
             );
         }) : <span />;
-
-        console.log(this.props);
 
         return (
             <div>

@@ -65,7 +65,7 @@ export function getCurrentPlaylist(playlistId) {
                 } else {
                     let currentPlaylist = JSON.parse(res.text);
 
-                    dispatch({ type: ADD_CURRENT_PLAYLIST, currentPlaylist});
+                    dispatch({ type: ADD_CURRENT_PLAYLIST, currentPlaylist: currentPlaylist.playlist});
                 }
             });
     }

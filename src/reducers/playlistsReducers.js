@@ -2,7 +2,7 @@ import * as types from '../actions';
 
 let initialState = {
     fetchStatus: {},
-    value: {}
+    value: []
 };
 
 // TBD: Need to refactor and divide logic of playlists and user
