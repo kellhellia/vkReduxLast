@@ -54,8 +54,13 @@ export function getUserPlaylists(userId) {
 export const ADD_CURRENT_PLAYLIST = 'ADD_CURRENT_PLAYLIST';
 export const addCurrentPlaylistId = currentPlaylist => ({ type: ADD_CURRENT_PLAYLIST, currentPlaylist});
 
+export const GET_CURRENT_PLAYLIST = 'GET_CURRENT_PLAYLIST';
+export const GET_CURRENT_PLAYLIST_LOADED = 'GET_CURRENT_PLAYLIST_LOADED';
+export const GET_CURRENT_PLAYLIST_FAILED = 'GET_CURRENT_PLAYLIST_FAILED';
+
 export function getCurrentPlaylist(playlistId) {
     return (dispatch) => {
+        dispatch({type: GET_CURRENT_PLAYLIST});
         request
             .get(`http://localhost:3000/playlist/${playlistId}`)
             .set('Accept', 'application/json')
@@ -66,6 +71,23 @@ export function getCurrentPlaylist(playlistId) {
                     let currentPlaylist = JSON.parse(res.text);
 
                     dispatch({ type: ADD_CURRENT_PLAYLIST, currentPlaylist: currentPlaylist.playlist});
+                    dispatch({type: GET_CURRENT_PLAYLIST_LOADED });
+                }
+            });
+    }
+};
+
+export function addTrackToPlaylist(currentPlaylistId, track) {
+    return (dispatch) => {
+        request
+            .post(`http://localhost:3000/playlist/${currentPlaylistId}`)
+            .set('Accept', 'application/json')
+            .send(track)
+            .end(function(err, res){
+                if (err || !res.ok) {
+                    console.log(err);
+                } else {
+                    console.log(res.text);
                 }
             });
     }

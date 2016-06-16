@@ -14,11 +14,31 @@ class PlaylistEdit extends Component {
     }
 
     render() {
+        let fetchStatus = this.props.currentPlaylist.fetchStatus.value;
+
         return (
             <div>
                 <UserSearch />
 
-                <p>play edit</p>
+                <h4>Playlist songs:</h4>
+
+                {
+                    fetchStatus === 'LOADING' && (
+                        <div>Loading songs...</div>
+                    )
+                }
+                {
+                    fetchStatus === 'FAILED' && (
+                        <div>Loading songs failed</div>
+                    )
+                }
+                {
+                    fetchStatus === 'LOADED' && (
+                        this.props.currentPlaylist.value.songs.map((track, index) => {
+                            return <div key={index}>{track.artist} - {track.title}</div>
+                        })
+                    )
+                }
             </div>
         )
 

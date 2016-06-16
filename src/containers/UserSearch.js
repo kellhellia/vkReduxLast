@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../store';
-import { search, getSearchTerm } from '../actions';
+import { search, getSearchTerm, addTrackToPlaylist } from '../actions';
 import request from 'superagent';
 
 class UserSearch extends Component {
@@ -20,18 +20,9 @@ class UserSearch extends Component {
     }
 
     handleBtnAddSong(track) {
-        let currentPlaylistId = this.props.currentPlaylist;
-        request
-            .post(`http://localhost:3000/playlist/${currentPlaylistId}`)
-            .set('Accept', 'application/json')
-            .send(track)
-            .end(function(err, res){
-                if (err || !res.ok) {
-                    console.log(err);
-                } else {
-                    console.log(res.text);
-                }
-            });
+        let currentPlaylistId = this.props.currentPlaylist.value[0]._id;
+
+        this.props.dispatch(addTrackToPlaylist(currentPlaylistId, track));
     }
 
     render() {

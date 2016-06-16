@@ -1,7 +1,13 @@
 import * as types from '../actions';
 
 let initialState = {
-    value: {},
+    value: {
+        _id: '1',
+        friendsIds:[],
+        ownerId: 1,
+        playlistName: '1',
+        songs:[]
+    },
     fetchStatus: {}
 };
 
@@ -23,7 +29,8 @@ export default function currentPlaylist(state = initialState, action) {
                     ...state.fetchStatus,
                     value: 'FAILED',
                     message: action.message
-                }
+                },
+                ...state.value
             };
 
         case types.GET_CURRENT_PLAYLIST_LOADED:
@@ -32,8 +39,7 @@ export default function currentPlaylist(state = initialState, action) {
                 fetchStatus: {
                     ...state.fetchStatus,
                     value: 'LOADED'
-                },
-                value: action.currentPlaylist
+                }
             };
 
         case types.ADD_CURRENT_PLAYLIST:
