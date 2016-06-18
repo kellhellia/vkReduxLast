@@ -20,7 +20,7 @@ class UserSearch extends Component {
     }
 
     handleBtnAddSong(track) {
-        let currentPlaylistId = this.props.currentPlaylist.value[0]._id;
+        let currentPlaylistId = this.props.currentPlaylist.value._id;
 
         this.props.dispatch(addTrackToPlaylist(currentPlaylistId, track));
     }

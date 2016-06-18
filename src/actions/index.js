@@ -79,6 +79,7 @@ export function getCurrentPlaylist(playlistId) {
 
 export function addTrackToPlaylist(currentPlaylistId, track) {
     return (dispatch) => {
+        console.log(1);
         request
             .post(`http://localhost:3000/playlist/${currentPlaylistId}`)
             .set('Accept', 'application/json')
