@@ -4,7 +4,7 @@ let initialState = {
     playlistName: ''
 };
 
-export default function tracks(state = initialState, action) {
+export default function newPlaylist(state = initialState, action) {
     switch(action.type) {
         case types.GET_NEW_PLAYLIST_NAME:
             return {

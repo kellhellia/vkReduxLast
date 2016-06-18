@@ -2,25 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../store';
 import request from 'superagent';
+import { createNewPlaylist } from '../actions';
 
 import UserSearch from './UserSearch';
 
 class PlaylistCreateAddSongs extends Component {
     componentDidMount() {
-        request
-            .post('http://localhost:3000/playlist/new')
-            .send({
-                ownerId: this.props.user.value.id,
-                playlistName: this.props.params.playlistName
-             })
-            .set('Accept', 'application/json')
-            .end(function(err, res){
-                if (err || !res.ok) {
-                    console.log(err);
-                } else {
-                    console.log(res);
-                }
-            });
+        let playlistName = this.props.params.playlistName;
+        let ownerId = this.props.user.value.id;
+
+        this.props.dispatch(createNewPlaylist(playlistName, ownerId));
     }
 
 
@@ -28,7 +19,6 @@ class PlaylistCreateAddSongs extends Component {
         return (
             <UserSearch />
         )
-
     }
 }
 

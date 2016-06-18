@@ -2,16 +2,30 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../store';
 import { Link } from 'react-router';
-import { getNewPlaylistName } from '../actions';
+import { getNewPlaylistName, createNewPlaylist } from '../actions';
 
 import UserSearch from './UserSearch';
 
 class PlaylistCreate extends Component {
+    constructor(props, context) {
+        super();
+        this.router = context.router;
+    }
     handleInputChange(e) {
         this.props.dispatch(getNewPlaylistName(e.target.value));
     }
 
+    handleBtnCreate() {
+        let playlistName = this.props.newPlaylist.playlistName;
+        let ownerId = this.props.user.value.id;
+
+        this.props.dispatch(createNewPlaylist(playlistName, ownerId));
+
+        this.router.push('/');
+    }
+
     render() {
+        console.log(this.props);
         let playlistName = this.props.newPlaylist.playlistName;
 
         return (
@@ -24,10 +38,10 @@ class PlaylistCreate extends Component {
                             onChange={::this.handleInputChange}
                         />
 
-                        <Link
-                            to={`/playlist/new/${playlistName}`}
-                            className="btn btn-primary"
-                        >Добавить песни</Link>
+                        <button
+                            className="btn btn-primary inline-block"
+                            onClick={::this.handleBtnCreate}
+                        >Создать плейлист</button>
                     </div>
                 </div>
             </div>
@@ -35,6 +49,10 @@ class PlaylistCreate extends Component {
 
     }
 }
+
+PlaylistCreate.contextTypes = {
+    router: React.PropTypes.object
+};
 
 PlaylistCreate = connect(state => state)(PlaylistCreate);
 

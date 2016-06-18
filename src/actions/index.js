@@ -51,6 +51,25 @@ export function getUserPlaylists(userId) {
     }
 };
 
+export function createNewPlaylist(playlistName, ownerId) {
+    return (dispatch) => {
+        request
+            .post('http://localhost:3000/playlist/new')
+            .send({
+                ownerId,
+                playlistName
+            })
+            .set('Accept', 'application/json')
+            .end(function(err, res){
+                if (err || !res.ok) {
+                    console.log(err);
+                } else {
+                    console.log(res);
+                }
+            });
+    }
+};
+
 export const ADD_CURRENT_PLAYLIST = 'ADD_CURRENT_PLAYLIST';
 export const addCurrentPlaylistId = currentPlaylist => ({ type: ADD_CURRENT_PLAYLIST, currentPlaylist});
 

@@ -16,7 +16,7 @@ class Navbar extends Component {
                     <span className="icon-bar"></span>
                     <span className="icon-bar"></span>
                   </button>
-                  <a className="navbar-brand" href="#">VKPLAY</a>
+                  <a className="navbar-brand" href="http://localhost:8080/">VKPLAY</a>
                 </div>
 
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
