@@ -70,26 +70,11 @@ export function createNewPlaylist(playlistName, ownerId) {
     }
 };
 
-export function removeTrackFromPlaylist(playlistId, trackId) {
-    return (dispatch) => {
-        request
-            .delete(`http://localhost:3000/rm-playlist/${playlistId}`)
-            .send(trackId)
-            .set('Accept', 'application/json')
-            .end(function(err, res){
-                if (err || !res.ok) {
-                    console.log(err);
-                } else {
-                    console.log(res);
-                }
-            });
-    }
-};
-
 export const ADD_CURRENT_PLAYLIST = 'ADD_CURRENT_PLAYLIST';
 export const addCurrentPlaylistId = currentPlaylist => ({ type: ADD_CURRENT_PLAYLIST, currentPlaylist});
 
 export const GET_CURRENT_PLAYLIST = 'GET_CURRENT_PLAYLIST';
+export const UPDATE_CURRENT_PLAYLIST = 'UPDATE_CURRENT_PLAYLIST';
 export const GET_CURRENT_PLAYLIST_LOADED = 'GET_CURRENT_PLAYLIST_LOADED';
 export const GET_CURRENT_PLAYLIST_FAILED = 'GET_CURRENT_PLAYLIST_FAILED';
 
@@ -114,7 +99,6 @@ export function getCurrentPlaylist(playlistId) {
 
 export function addTrackToPlaylist(currentPlaylistId, track) {
     return (dispatch) => {
-        console.log(1);
         request
             .post(`http://localhost:3000/playlist/${currentPlaylistId}`)
             .set('Accept', 'application/json')
@@ -123,7 +107,27 @@ export function addTrackToPlaylist(currentPlaylistId, track) {
                 if (err || !res.ok) {
                     console.log(err);
                 } else {
-                    console.log(res.text);
+                    let currentPlaylist = JSON.parse(res.text);
+
+                    dispatch({ type: UPDATE_CURRENT_PLAYLIST, currentPlaylist: currentPlaylist});
+                }
+            });
+    }
+};
+
+export function removeTrackFromPlaylist(playlistId, trackId) {
+    return (dispatch) => {
+        request
+            .delete(`http://localhost:3000/rm-playlist/${playlistId}`)
+            .send(trackId)
+            .set('Accept', 'application/json')
+            .end(function(err, res){
+                if (err || !res.ok) {
+                    console.log(err);
+                } else {
+                    let currentPlaylist = JSON.parse(res.text);
+
+                    dispatch({ type: UPDATE_CURRENT_PLAYLIST, currentPlaylist: currentPlaylist});
                 }
             });
     }

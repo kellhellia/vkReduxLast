@@ -43,7 +43,7 @@ class PlaylistEdit extends Component {
 
                             return (
                                 <div className="row form-group" key={index}>
-                                    <div className="col-xs-2">
+                                    <div className="col-xs-3">
                                         <span>{track.artist} - {track.title}</span>
                                     </div>
                                     <div className="col-xs-2">

@@ -48,6 +48,12 @@ export default function currentPlaylist(state = initialState, action) {
                 value: action.currentPlaylist
             }
 
+        case types.UPDATE_CURRENT_PLAYLIST:
+            return {
+                ...state,
+                value: action.currentPlaylist
+            }
+
         default:
             return state;
     }
