@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../store';
 import request from 'superagent';
-import { getCurrentPlaylist } from '../actions';
+import { getCurrentPlaylist, removeTrackFromPlaylist } from '../actions';
 
 import UserSearch from './UserSearch';
 
 class PlaylistEdit extends Component {
     componentDidMount() {
         let playlistId = this.props.params.playlistId;
-
         this.props.dispatch(getCurrentPlaylist(playlistId));
+    }
+
+    handleRemoveTrackBtn(trackId) {
+        let playlistId = this.props.params.playlistId;
+        this.props.dispatch(removeTrackFromPlaylist(playlistId, trackId));
     }
 
     render() {
@@ -35,7 +39,21 @@ class PlaylistEdit extends Component {
                 {
                     fetchStatus === 'LOADED' && (
                         this.props.currentPlaylist.value.songs.map((track, index) => {
-                            return <div key={index}>{track.artist} - {track.title}</div>
+                            let trackId = track.trackId;
+
+                            return (
+                                <div className="row form-group" key={index}>
+                                    <div className="col-xs-2">
+                                        <span>{track.artist} - {track.title}</span>
+                                    </div>
+                                    <div className="col-xs-2">
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={this.handleRemoveTrackBtn.bind(this, {trackId})}
+                                        >Remove track</button>
+                                    </div>
+                                </div>
+                            )
                         })
                     )
                 }

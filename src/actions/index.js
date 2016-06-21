@@ -70,6 +70,22 @@ export function createNewPlaylist(playlistName, ownerId) {
     }
 };
 
+export function removeTrackFromPlaylist(playlistId, trackId) {
+    return (dispatch) => {
+        request
+            .delete(`http://localhost:3000/rm-playlist/${playlistId}`)
+            .send(trackId)
+            .set('Accept', 'application/json')
+            .end(function(err, res){
+                if (err || !res.ok) {
+                    console.log(err);
+                } else {
+                    console.log(res);
+                }
+            });
+    }
+};
+
 export const ADD_CURRENT_PLAYLIST = 'ADD_CURRENT_PLAYLIST';
 export const addCurrentPlaylistId = currentPlaylist => ({ type: ADD_CURRENT_PLAYLIST, currentPlaylist});
 
