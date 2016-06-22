@@ -4,8 +4,6 @@ import store from '../store';
 import { Link } from 'react-router';
 import { getNewPlaylistName, createNewPlaylist } from '../actions';
 
-import UserSearch from './UserSearch';
-
 class PlaylistCreate extends Component {
     constructor(props, context) {
         super();

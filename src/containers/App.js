@@ -6,7 +6,6 @@ import { Link } from 'react-router';
 
 import Navbar from './Navbar';
 import UserSongs from './UserSongs';
-import UserSearch from './UserSearch';
 
 class App extends Component {
     render() {
