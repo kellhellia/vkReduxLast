@@ -5,7 +5,8 @@ let initialState = {
         firstName: 'firstName',
         lastName: 'lastName',
         id: 1,
-        userPic: 'userPic'
+        userPic: 'userPic',
+        friends: []
     },
     fetchStatus: {}
 };
@@ -42,6 +43,35 @@ export default function user(state = initialState, action) {
                     value: 'LOADED'
                 },
                 value: action.user
+            };
+
+        case types.GET_USER_FRIENDS:
+            return {
+                ...state,
+                fetchStatus: {
+                    ...state.fetchStatus,
+                    value: 'LOADING FRIENDS'
+                }
+            };
+
+        case types.GET_USER_FRIENDS_FAILED:
+            return {
+                ...state,
+                fetchStatus: {
+                    ...state.fetchStatus,
+                    value: 'FAILED',
+                    message: action.message
+                }
+            };
+
+        case types.GET_USER_FRIENDS_LOADED:
+            return {
+                ...state,
+                fetchStatus: {
+                    ...state.fetchStatus,
+                    value: 'LOADED'
+                },
+                friends: action.friends
             };
 
         default:

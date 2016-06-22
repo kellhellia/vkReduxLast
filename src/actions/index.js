@@ -51,6 +51,33 @@ export function getUserPlaylists(userId) {
     }
 };
 
+export const GET_USER_FRIENDS = 'GET_USER_FRIENDS';
+export const GET_USER_FRIENDS_LOADED = 'GET_USER_FRIENDS_LOADED';
+export const GET_USER_FRIENDS_FAILED = 'GET_USER_FRIENDS_FAILED';
+
+export function getUserFriends(userId) {
+    return (dispatch) => {
+        dispatch({type: GET_USER_FRIENDS});
+
+        return new Promise((resolve, reject) => {
+            VK.api('friends.get',{
+                order: 'hints',
+                count: 50,
+                fields: 'domain',
+                name_case: 'nom'
+            }, (data) => {
+                if (data.response) {
+                    dispatch({ type: GET_USER_FRIENDS_LOADED, friends: data.response });
+                    resolve();
+                } else {
+                    dispatch({ type: GET_USER_FRIENDS_LOADED });
+                    reject(new Error('no response'));
+                }
+            });
+        });
+    }
+}
+
 export function createNewPlaylist(playlistName, ownerId) {
     return (dispatch) => {
         request

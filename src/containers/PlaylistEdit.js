@@ -69,6 +69,8 @@ class PlaylistEdit extends Component {
 
         let fetchStatus = this.props.currentPlaylist.fetchStatus.value;
 
+        console.log(this.props.user.friends);
+
         return (
             <div>
                 <div className="row">

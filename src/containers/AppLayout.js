@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
 import store from '../store';
-import { addUser, getUserPlaylists } from '../actions';
+import { addUser, getUserPlaylists, getUserFriends } from '../actions';
 import { Link } from 'react-router';
 
 import Navbar from './Navbar';
@@ -13,6 +13,7 @@ class AppLayout extends Component {
 
         let userId = this.props.user.value.id;
         this.props.getUserPlaylists(userId);
+        this.props.getUserFriends();
     }
 
     async init() {
@@ -48,6 +49,6 @@ class AppLayout extends Component {
     }
 }
 
-AppLayout = connect(state => state, { addUser, getUserPlaylists})(AppLayout);
+AppLayout = connect(state => state, { addUser, getUserPlaylists, getUserFriends})(AppLayout);
 
 export default AppLayout;
