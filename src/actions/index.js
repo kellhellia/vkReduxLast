@@ -63,7 +63,7 @@ export function getUserFriends(userId) {
             VK.api('friends.get',{
                 order: 'hints',
                 count: 50,
-                fields: 'domain',
+                fields: 'domain, photo_100',
                 name_case: 'nom'
             }, (data) => {
                 if (data.response) {

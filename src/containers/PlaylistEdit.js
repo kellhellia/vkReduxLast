@@ -68,11 +68,46 @@ class PlaylistEdit extends Component {
             (<div className="col-sm-12">Search results: {searchResultsSongs} </div>) : <span />;
 
         let fetchStatus = this.props.currentPlaylist.fetchStatus.value;
+        let fetchStatusFriends = this.props.user.fetchStatusFriends.value;
 
         console.log(this.props.user.friends);
+        console.log(this.props.user.fetchStatusFriends);
 
         return (
             <div>
+                <div className="row mb50">
+                    {
+                        fetchStatusFriends === 'LOADING' && (
+                            <div>Loading friends...</div>
+                        )
+                    }
+                    {
+                        fetchStatusFriends === 'FAILED' && (
+                            <div>Loading friends failed</div>
+                        )
+                    }
+                    {
+                        fetchStatusFriends === 'LOADED' && (
+                            this.props.user.friends.map((friend, index) => {
+                                return (
+                                    <a
+                                        href={`https://vk.com/id${friend.user_id}`}
+                                        key={index}
+                                        className="col-xs-2 text-center"
+                                        target="blank"
+                                    >
+                                        <img
+                                            src={friend.photo_100}
+                                            className="img-circle center-block"
+                                            width="30"
+                                        />
+                                        <div>{friend.first_name} {friend.last_name}</div>
+                                    </a>
+                                )
+                            })
+                        )
+                    }
+                </div>
                 <div className="row">
                     <div className="col-sm-10">
                         <form onSubmit={::this.handleBtnSearch}>

@@ -8,7 +8,8 @@ let initialState = {
         userPic: 'userPic',
         friends: []
     },
-    fetchStatus: {}
+    fetchStatus: {},
+    fetchStatusFriends: {}
 };
 
 // TBD: Need to refactor and divide logic of playlists and user
@@ -48,17 +49,17 @@ export default function user(state = initialState, action) {
         case types.GET_USER_FRIENDS:
             return {
                 ...state,
-                fetchStatus: {
-                    ...state.fetchStatus,
-                    value: 'LOADING FRIENDS'
+                fetchStatusFriends: {
+                    ...state.fetchStatusFriends,
+                    value: 'LOADING'
                 }
             };
 
         case types.GET_USER_FRIENDS_FAILED:
             return {
                 ...state,
-                fetchStatus: {
-                    ...state.fetchStatus,
+                fetchStatusFriends: {
+                    ...state.fetchStatusFriends,
                     value: 'FAILED',
                     message: action.message
                 }
@@ -67,8 +68,8 @@ export default function user(state = initialState, action) {
         case types.GET_USER_FRIENDS_LOADED:
             return {
                 ...state,
-                fetchStatus: {
-                    ...state.fetchStatus,
+                fetchStatusFriends: {
+                    ...state.fetchStatusFriends,
                     value: 'LOADED'
                 },
                 friends: action.friends
