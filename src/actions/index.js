@@ -55,6 +55,12 @@ export const GET_USER_FRIENDS = 'GET_USER_FRIENDS';
 export const GET_USER_FRIENDS_LOADED = 'GET_USER_FRIENDS_LOADED';
 export const GET_USER_FRIENDS_FAILED = 'GET_USER_FRIENDS_FAILED';
 
+export const APP_FRIENDS_MODAL_OPEN = 'APP_FRIENDS_MODAL_OPEN';
+export const APP_FRIENDS_MODAL_CLOSE = 'APP_FRIENDS_MODAL_CLOSE';
+
+export const handleFriendsModalOpen = () => ({ type: APP_FRIENDS_MODAL_OPEN });
+export const handleFriendsModalClose = () => ({ type: APP_FRIENDS_MODAL_CLOSE });
+
 export function getUserFriends(userId) {
     return (dispatch) => {
         dispatch({type: GET_USER_FRIENDS});

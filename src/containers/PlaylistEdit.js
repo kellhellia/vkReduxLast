@@ -7,8 +7,12 @@ import {
     search,
     getCurrentPlaylist,
     addTrackToPlaylist,
-    removeTrackFromPlaylist
+    removeTrackFromPlaylist,
+    handleFriendsModalOpen,
+    handleFriendsModalClose
 } from '../actions';
+
+import Modal from 'react-modal';
 
 class PlaylistEdit extends Component {
     componentDidMount() {
@@ -20,7 +24,7 @@ class PlaylistEdit extends Component {
         this.props.dispatch(getSearchTerm(e.target.value));
     }
 
-    handleBtnSearch(e) {
+    handleSearch(e) {
         e.preventDefault();
 
         let searchTerm = this.props.search.value.searchTerm;
@@ -30,18 +34,47 @@ class PlaylistEdit extends Component {
         }
     }
 
-    handleBtnAddSong(track) {
+    handleAddSong(track) {
         let playlistId = this.props.params.playlistId;
 
         this.props.dispatch(addTrackToPlaylist(playlistId, track));
     }
 
-    handleRemoveTrackBtn(trackId) {
+    handleRemoveTrack(trackId) {
         let playlistId = this.props.params.playlistId;
         this.props.dispatch(removeTrackFromPlaylist(playlistId, trackId));
     }
 
+    handleFriendsModalOpen() {
+        this.props.dispatch(handleFriendsModalOpen());
+    }
+
+    handleFriendsModalClose() {
+        this.props.dispatch(handleFriendsModalClose());
+    }
+
     render() {
+        const customStyles = {
+          overlay : {
+            position: 'fixed',
+            backgroundColor: 'rgba(0, 0, 0, .8)'
+          },
+          content : {
+            top: '100px',
+            left: '30%',
+            right: 'auto',
+            bottom: 'auto',
+            backgroundColor: '#fff',
+            border: 0,
+            padding: '0 20px',
+            borderRadius: 0,
+            width: '40%',
+            color: 'black',
+            paddingTop: '40px',
+            paddingBottom: '40px'
+          }
+        };
+
         let searchResults = this.props.search.value.searchResults;
 
         let searchResultsSongs = searchResults ?
@@ -56,7 +89,7 @@ class PlaylistEdit extends Component {
                             <div className="col-xs-2">
                                 <button
                                     className="btn btn-primary inline-block"
-                                    onClick={this.handleBtnAddSong.bind(this, track)}
+                                    onClick={this.handleAddSong.bind(this, track)}
                                 >Add song</button>
                             </div>
                         </div>
@@ -69,48 +102,56 @@ class PlaylistEdit extends Component {
 
         let fetchStatus = this.props.currentPlaylist.fetchStatus.value;
         let fetchStatusFriends = this.props.user.fetchStatusFriends.value;
-
-        console.log(this.props.user.friends);
-        console.log(this.props.user.fetchStatusFriends);
+        let friendsModalOpen = this.props.app.friendsModalOpen;
 
         return (
             <div>
-                <div className="row mb50">
-                    {
-                        fetchStatusFriends === 'LOADING' && (
-                            <div>Loading friends...</div>
-                        )
-                    }
-                    {
-                        fetchStatusFriends === 'FAILED' && (
-                            <div>Loading friends failed</div>
-                        )
-                    }
-                    {
-                        fetchStatusFriends === 'LOADED' && (
-                            this.props.user.friends.map((friend, index) => {
-                                return (
-                                    <a
-                                        href={`https://vk.com/id${friend.user_id}`}
-                                        key={index}
-                                        className="col-xs-2 text-center"
-                                        target="blank"
-                                    >
-                                        <img
-                                            src={friend.photo_100}
-                                            className="img-circle center-block"
-                                            width="30"
-                                        />
-                                        <div>{friend.first_name} {friend.last_name}</div>
-                                    </a>
-                                )
-                            })
-                        )
-                    }
-                </div>
+                <button onClick={::this.handleFriendsModalOpen}>Open modal</button>
+
+                <Modal
+                    isOpen={friendsModalOpen}
+                    onRequestClose={::this.handleFriendsModalClose}
+                    style={customStyles}
+                >
+
+                    <div className="row mb50">
+                        {
+                            fetchStatusFriends === 'LOADING' && (
+                                <div>Loading friends...</div>
+                            )
+                        }
+                        {
+                            fetchStatusFriends === 'FAILED' && (
+                                <div>Loading friends failed</div>
+                            )
+                        }
+                        {
+                            fetchStatusFriends === 'LOADED' && (
+                                this.props.user.friends.map((friend, index) => {
+                                    return (
+                                        <a
+                                            href={`https://vk.com/id${friend.user_id}`}
+                                            key={index}
+                                            className="col-xs-3 text-center form-group"
+                                            target="blank"
+                                        >
+                                            <img
+                                                src={friend.photo_100}
+                                                className="img-circle center-block"
+                                                width="30"
+                                            />
+                                            <div>{friend.first_name} {friend.last_name}</div>
+                                        </a>
+                                    )
+                                })
+                            )
+                        }
+                    </div>
+                </Modal>
+
                 <div className="row">
                     <div className="col-sm-10">
-                        <form onSubmit={::this.handleBtnSearch}>
+                        <form onSubmit={::this.handleSearch}>
                             <input
                                 className="search__input form-control"
                                 placeholder="Введите исполнителя/название трека"
@@ -123,7 +164,7 @@ class PlaylistEdit extends Component {
                         <button
                             type="submit"
                             className="btn btn-primary text-uppercase"
-                            onClick={::this.handleBtnSearch}
+                            onClick={::this.handleSearch}
                         >Search</button>
                     </div>
                 </div>
@@ -162,7 +203,7 @@ class PlaylistEdit extends Component {
                                             <div className="col-xs-2">
                                                 <button
                                                     className="btn btn-danger"
-                                                    onClick={this.handleRemoveTrackBtn.bind(this, {trackId})}
+                                                    onClick={this.handleRemoveTrack.bind(this, {trackId})}
                                                 >Remove track</button>
                                             </div>
                                         </div>
