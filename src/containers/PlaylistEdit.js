@@ -8,8 +8,7 @@ import {
     addTrackToPlaylist,
     removeTrackFromPlaylist,
     handleFriendsModalOpen,
-    handleFriendsModalClose,
-    addFriendToPlaylist
+    handleFriendsModalClose
 } from '../actions';
 
 import Modal from 'react-modal';
@@ -52,12 +51,6 @@ class PlaylistEdit extends Component {
 
     handleFriendsModalClose() {
         this.props.dispatch(handleFriendsModalClose());
-    }
-
-    handleAddFriendToPlaylist(friendId) {
-        let playlistId = this.props.params.playlistId;
-
-        this.props.dispatch(addFriendToPlaylist(playlistId, friendId));
     }
 
     render() {
@@ -113,6 +106,8 @@ class PlaylistEdit extends Component {
         let fetchStatusFriends = this.props.user.fetchStatusFriends.value;
         let friendsModalOpen = this.props.app.friendsModalOpen;
 
+        let friendsFromVk = this.props.user.friends;
+
         return (
             <div>
                 <button onClick={::this.handleFriendsModalOpen}>Open modal</button>
@@ -138,14 +133,13 @@ class PlaylistEdit extends Component {
                             }
                             {
                                 fetchStatusFriends === 'LOADED' && (
-                                    this.props.user.friends.map((friend, index) => {
+                                    friendsFromVk.map((friend, index) => {
                                         return (
                                             <CheckedFriend
                                                 friend={friend}
-                                                addFriendToPlaylist={this.handleAddFriendToPlaylist.bind(this, friend.uid)}
                                                 key={index}
                                             />
-                                            )
+                                        )
                                     })
                                 )
                             }
