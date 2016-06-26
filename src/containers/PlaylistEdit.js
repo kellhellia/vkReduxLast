@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../store';
-import request from 'superagent';
 import {
     getSearchTerm,
     search,
@@ -9,10 +8,12 @@ import {
     addTrackToPlaylist,
     removeTrackFromPlaylist,
     handleFriendsModalOpen,
-    handleFriendsModalClose
+    handleFriendsModalClose,
+    addFriendToPlaylist
 } from '../actions';
 
 import Modal from 'react-modal';
+import CheckedFriend from './CheckedFriend';
 
 class PlaylistEdit extends Component {
     componentDidMount() {
@@ -53,6 +54,12 @@ class PlaylistEdit extends Component {
         this.props.dispatch(handleFriendsModalClose());
     }
 
+    handleAddFriendToPlaylist(friendId) {
+        let playlistId = this.props.params.playlistId;
+
+        this.props.dispatch(addFriendToPlaylist(playlistId, friendId));
+    }
+
     render() {
         const customStyles = {
           overlay : {
@@ -60,18 +67,20 @@ class PlaylistEdit extends Component {
             backgroundColor: 'rgba(0, 0, 0, .8)'
           },
           content : {
-            top: '100px',
+            top: '70px',
             left: '30%',
             right: 'auto',
             bottom: 'auto',
             backgroundColor: '#fff',
             border: 0,
-            padding: '0 20px',
             borderRadius: 0,
             width: '40%',
+            height: '500px',
             color: 'black',
-            paddingTop: '40px',
-            paddingBottom: '40px'
+            paddingTop: '20px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
+            paddingBottom: '0px'
           }
         };
 
@@ -113,39 +122,34 @@ class PlaylistEdit extends Component {
                     onRequestClose={::this.handleFriendsModalClose}
                     style={customStyles}
                 >
+                    <h5>Кто может слушать плейлист: </h5>
 
-                    <div className="row mb50">
-                        {
-                            fetchStatusFriends === 'LOADING' && (
-                                <div>Loading friends...</div>
-                            )
-                        }
-                        {
-                            fetchStatusFriends === 'FAILED' && (
-                                <div>Loading friends failed</div>
-                            )
-                        }
-                        {
-                            fetchStatusFriends === 'LOADED' && (
-                                this.props.user.friends.map((friend, index) => {
-                                    return (
-                                        <a
-                                            href={`https://vk.com/id${friend.user_id}`}
-                                            key={index}
-                                            className="col-xs-3 text-center form-group"
-                                            target="blank"
-                                        >
-                                            <img
-                                                src={friend.photo_100}
-                                                className="img-circle center-block"
-                                                width="30"
+                    <div className="container-fluid">
+                        <div className="row mb50">
+                            {
+                                fetchStatusFriends === 'LOADING' && (
+                                    <div>Loading friends...</div>
+                                )
+                            }
+                            {
+                                fetchStatusFriends === 'FAILED' && (
+                                    <div>Loading friends failed</div>
+                                )
+                            }
+                            {
+                                fetchStatusFriends === 'LOADED' && (
+                                    this.props.user.friends.map((friend, index) => {
+                                        return (
+                                            <CheckedFriend
+                                                friend={friend}
+                                                addFriendToPlaylist={this.handleAddFriendToPlaylist.bind(this, friend.uid)}
+                                                key={index}
                                             />
-                                            <div>{friend.first_name} {friend.last_name}</div>
-                                        </a>
-                                    )
-                                })
-                            )
-                        }
+                                            )
+                                    })
+                                )
+                            }
+                        </div>
                     </div>
                 </Modal>
 
