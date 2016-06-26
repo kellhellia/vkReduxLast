@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../store';
 
-import { addFriendToPlaylist } from '../actions';
+import {
+    addFriendToPlaylist,
+    removeFriendFromPlaylist
+} from '../actions';
 
 class CheckedFriend extends Component {
     handleAddFriendToPlaylist(friendId) {
@@ -18,7 +21,10 @@ class CheckedFriend extends Component {
         let checkedFriend = checked ? 'checked' : '';
 
         return (
-            <div onClick={this.handleAddFriendToPlaylist.bind(this, friend.uid)} className="row form-group">
+            <div
+                onClick={this.handleAddFriendToPlaylist.bind(this, friend.uid)}
+                className="row form-group"
+            >
                 <div className="col-xs-1">
                     <img
                         src={friend.photo_100}
@@ -30,7 +36,11 @@ class CheckedFriend extends Component {
                 <div className="col-xs-2">{
                     friendsFromPlaylist.map((playlistFriendId, index) => {
                         if (friend.uid === playlistFriendId) {
-                            return <div key={index}>checked</div>
+                            return (
+                                <div className="text-right" key={index}>
+                                    <i className="glyphicon glyphicon-ok green"></i>
+                                </div>
+                            )
                         }
                         return <span key={index} />
                     })

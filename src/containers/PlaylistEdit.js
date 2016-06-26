@@ -109,8 +109,8 @@ class PlaylistEdit extends Component {
         let friendsFromVk = this.props.user.friends;
 
         return (
-            <div>
-                <button onClick={::this.handleFriendsModalOpen}>Open modal</button>
+            <div className="playlist-edit">
+                <i className="playlist-edit-cog glyphicon glyphicon-cog" onClick={::this.handleFriendsModalOpen}></i>
 
                 <Modal
                     isOpen={friendsModalOpen}
