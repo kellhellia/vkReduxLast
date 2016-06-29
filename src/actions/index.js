@@ -29,6 +29,22 @@ export function addUser(userId) {
     }
 }
 
+export function newFriendsList(friendsFromVk, friendsFromPlaylist) {
+    return (dispatch) => {
+            let newFriendsList = friendsFromVk.map(n => {
+                return friendsFromPlaylist.map(m => {
+                    if (n.uid === m) {
+                        return n.checked = true;
+                    } else {
+                        return n;
+                    }
+                });
+            });
+
+            console.log('newFriendsList');
+    }
+}
+
 export const GET_USER_PLAYLISTS = 'GET_USER_PLAYLISTS';
 export const GET_USER_PLAYLISTS_LOADED = 'GET_PLAYLISTS_LOADED';
 export const GET_USER_PLAYLISTS_FAILED = 'GET_PLAYLISTS_FAILED';

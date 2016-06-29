@@ -134,20 +134,22 @@ class PlaylistEdit extends Component {
                             }
                             {
                                 fetchStatusFriends === 'LOADED' && (
-                                    friendsFromVk.map(n => {
-                                        return friendsFromPlaylist.map(m => {
-                                            if (n.uid === m) {
+                                    friendsFromVk.map(friend => {
+                                        return friendsFromPlaylist.map(id => {
+                                            if (friend.uid === id) {
                                                 return (
                                                     <CheckedFriend
-                                                        friend={n}
+                                                        friend={friend}
                                                         checked={true}
-                                                    />)
+                                                    />
+                                                )
                                             } else {
                                                 return (
                                                     <CheckedFriend
-                                                        friend={n}
+                                                        friend={friend}
                                                         checked={false}
-                                                    />)
+                                                    />
+                                                )
                                             }
                                         })
                                     })
