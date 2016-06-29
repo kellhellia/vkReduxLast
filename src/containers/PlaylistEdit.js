@@ -107,6 +107,7 @@ class PlaylistEdit extends Component {
         let friendsModalOpen = this.props.app.friendsModalOpen;
 
         let friendsFromVk = this.props.user.friends;
+        let friendsFromPlaylist = this.props.currentPlaylist.value.friends;
 
         return (
             <div>
@@ -133,13 +134,22 @@ class PlaylistEdit extends Component {
                             }
                             {
                                 fetchStatusFriends === 'LOADED' && (
-                                    friendsFromVk.map((friend, index) => {
-                                        return (
-                                            <CheckedFriend
-                                                friend={friend}
-                                                key={index}
-                                            />
-                                        )
+                                    friendsFromVk.map(n => {
+                                        return friendsFromPlaylist.map(m => {
+                                            if (n.uid === m) {
+                                                return (
+                                                    <CheckedFriend
+                                                        friend={n}
+                                                        checked={true}
+                                                    />)
+                                            } else {
+                                                return (
+                                                    <CheckedFriend
+                                                        friend={n}
+                                                        checked={false}
+                                                    />)
+                                            }
+                                        })
                                     })
                                 )
                             }
