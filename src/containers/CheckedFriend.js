@@ -9,28 +9,32 @@ import {
 
 class CheckedFriend extends Component {
     handleAddFriendToPlaylist(friendId) {
-        // let playlistId = this.props.currentPlaylist.value._id;
+        let playlistId = this.props.currentPlaylist.value._id;
 
-        // this.props.dispatch(addFriendToPlaylist(playlistId, friendId));
+        console.log(1);
 
-        console.log('add');
+        this.props.dispatch(addFriendToPlaylist(playlistId, friendId));
     }
 
     handleRemoveFriendFromPlaylist(friendId) {
-        // let playlistId = this.props.currentPlaylist.value._id;
+        let playlistId = this.props.currentPlaylist.value._id;
 
-        // this.props.dispatch(addFriendToPlaylist(playlistId, friendId));
-
-        console.log('remove');
+        this.props.dispatch(removeFriendFromPlaylist(playlistId, friendId));
     }
 
     render() {
         let { friend, checked } = this.props;
 
-        let checkedFriend = checked ? 'checked' : 'huy';
+        let checkedFriend = checked ?
+            <i className="glyphicon glyphicon-remove" /> :
+            <i className="glyphicon glyphicon-plus" />;
+
+        let checkedFunc = checked ?
+            this.handleRemoveFriendFromPlaylist.bind(this, friend.uid) :
+            this.handleAddFriendToPlaylist.bind(this, friend.uid);
 
         return (
-            <div className="row form-group">
+            <div onClick={checkedFunc} className="row form-group">
                 <div className="col-xs-1">
                     <img
                         src={friend.photo_100}

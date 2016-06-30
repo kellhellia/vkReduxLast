@@ -182,6 +182,22 @@ export function addFriendToPlaylist(playlistId, friendId) {
     }
 };
 
+export function removeFriendFromPlaylist(playlistId, friendId) {
+    return (dispatch) => {
+        request
+            .delete(`http://localhost:3000/friend/${playlistId}/`)
+            .send({friendId})
+            .set('Accept', 'application/json')
+            .end(function(err, res){
+                if (err || !res.ok) {
+                    console.log(err);
+                } else {
+                    console.log(res);
+                }
+            });
+    }
+};
+
 export const SEARCH_REQUEST = 'SEARCH_REQUEST';
 export const SEARCH_LOADED = 'SEARCH_LOADED';
 export const SEARCH_FAILED = 'SEARCH_FAILED';

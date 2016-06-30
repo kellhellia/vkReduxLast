@@ -104,10 +104,22 @@ class PlaylistEdit extends Component {
 
         let fetchStatus = this.props.currentPlaylist.fetchStatus.value;
         let fetchStatusFriends = this.props.user.fetchStatusFriends.value;
+        let fetchStatusPlaylist = this.props.currentPlaylist.fetchStatus.value;
         let friendsModalOpen = this.props.app.friendsModalOpen;
 
         let friendsFromVk = this.props.user.friends;
         let friendsFromPlaylist = this.props.currentPlaylist.value.friends;
+
+        let lol = (fetchStatusFriends === 'LOADED' && fetchStatusPlaylist === 'LOADED') ?
+            friendsFromVk.map((friend, index) => {
+                return (
+                    <CheckedFriend
+                        key={index}
+                        friend={friend}
+                        checked={friendsFromPlaylist.length && friendsFromPlaylist.indexOf(friend.uid) != -1}
+                    />
+                )
+            }) : <span />;
 
         return (
             <div className="playlist-edit">
@@ -132,29 +144,7 @@ class PlaylistEdit extends Component {
                                     <div>Loading friends failed</div>
                                 )
                             }
-                            {
-                                fetchStatusFriends === 'LOADED' && (
-                                    friendsFromVk.map(friend => {
-                                        return friendsFromPlaylist.map(id => {
-                                            if (friend.uid === id) {
-                                                return (
-                                                    <CheckedFriend
-                                                        friend={friend}
-                                                        checked={true}
-                                                    />
-                                                )
-                                            } else {
-                                                return (
-                                                    <CheckedFriend
-                                                        friend={friend}
-                                                        checked={false}
-                                                    />
-                                                )
-                                            }
-                                        })
-                                    })
-                                )
-                            }
+                            {lol}
                         </div>
                     </div>
                 </Modal>
