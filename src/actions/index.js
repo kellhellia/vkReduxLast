@@ -141,7 +141,6 @@ export function addTrackToPlaylist(currentPlaylistId, track) {
                     console.log(err);
                 } else {
                     let currentPlaylist = JSON.parse(res.text);
-
                     dispatch({ type: UPDATE_CURRENT_PLAYLIST, currentPlaylist: currentPlaylist});
                 }
             });
@@ -159,7 +158,6 @@ export function removeTrackFromPlaylist(playlistId, trackId) {
                     console.log(err);
                 } else {
                     let currentPlaylist = JSON.parse(res.text);
-
                     dispatch({ type: UPDATE_CURRENT_PLAYLIST, currentPlaylist: currentPlaylist});
                 }
             });
@@ -176,7 +174,8 @@ export function addFriendToPlaylist(playlistId, friendId) {
                 if (err || !res.ok) {
                     console.log(err);
                 } else {
-                    console.log(res);
+                    let currentPlaylist = JSON.parse(res.text);
+                    dispatch({ type: UPDATE_CURRENT_PLAYLIST, currentPlaylist: currentPlaylist});
                 }
             });
     }
@@ -192,7 +191,8 @@ export function removeFriendFromPlaylist(playlistId, friendId) {
                 if (err || !res.ok) {
                     console.log(err);
                 } else {
-                    console.log(res);
+                    let currentPlaylist = JSON.parse(res.text);
+                    dispatch({ type: UPDATE_CURRENT_PLAYLIST, currentPlaylist: currentPlaylist});
                 }
             });
     }

@@ -11,8 +11,6 @@ class CheckedFriend extends Component {
     handleAddFriendToPlaylist(friendId) {
         let playlistId = this.props.currentPlaylist.value._id;
 
-        console.log(1);
-
         this.props.dispatch(addFriendToPlaylist(playlistId, friendId));
     }
 
