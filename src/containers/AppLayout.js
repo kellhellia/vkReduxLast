@@ -35,6 +35,7 @@ class AppLayout extends Component {
 
     render() {
         let user = this.props.user.value;
+        console.log(user);
 
         return (
             <div>

@@ -24,15 +24,15 @@ class CheckedFriend extends Component {
         let { friend, checked } = this.props;
 
         let checkedFriend = checked ?
-            <i className="glyphicon glyphicon-remove" /> :
-            <i className="glyphicon glyphicon-plus" />;
+            <i className="glyphicon glyphicon-remove red" /> :
+            <i className="glyphicon glyphicon-plus green" />;
 
         let checkedFunc = checked ?
             this.handleRemoveFriendFromPlaylist.bind(this, friend.uid) :
             this.handleAddFriendToPlaylist.bind(this, friend.uid);
 
         return (
-            <div onClick={checkedFunc} className="row form-group">
+            <div onClick={checkedFunc} className="row form-group playlist-edit-row">
                 <div className="col-xs-1">
                     <img
                         src={friend.photo_100}
